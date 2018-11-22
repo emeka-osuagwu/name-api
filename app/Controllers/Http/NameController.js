@@ -46,6 +46,36 @@ class NameController {
     | index - Get all user from database
     |--------------------------------------------------------------------------
     */
+    async create({request, response}) {
+
+        const request_data = request.only([
+            'name',
+            'status',
+        ])
+
+        const name = nameService.findNameBy('name', request.input('name'))
+
+        if (name) {
+            return response.status(400).send({
+                status: 400,
+                message: "name already exist"
+            })
+        }
+        else{
+            const create = await nameService.create(request_data);
+
+            return response.status(200).send({
+                status: 200,
+                data: create
+            })
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | index - Get all user from database
+    |--------------------------------------------------------------------------
+    */
     async update({request, response, params: {id}}) {
 
         const name = await nameService.findNameBy('id', id);

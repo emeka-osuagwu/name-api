@@ -36,6 +36,25 @@ class NameService {
     async findNameBy(field, data) {
         return await Name.findBy(field, data);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create new user in database
+    |--------------------------------------------------------------------------
+    */
+    async create(data) {
+        const name = new Name()
+
+        Object.keys(data).forEach(fieldName => {
+            if (fieldName != "user_id" && data[fieldName] != "") {
+                name[fieldName] = data[fieldName];
+            }
+        });
+
+        await name.save()
+
+        return await this.findNameBy('name', data.name)
+    }
 }
 
 module.exports = NameService;
