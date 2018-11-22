@@ -53,22 +53,30 @@ class NameController {
             'status',
         ])
 
-        const name = nameService.findNameBy('name', request.input('name'))
+        const create = await nameService.create(request_data);
 
-        if (name) {
-            return response.status(400).send({
-                status: 400,
-                message: "name already exist"
-            })
-        }
-        else{
-            const create = await nameService.create(request_data);
+        return response.status(200).send({
+            status: 200,
+            data: create
+        })
 
-            return response.status(200).send({
-                status: 200,
-                data: create
-            })
-        }
+        // const name = nameService.findNameBy('name', request.input('name'))
+        // return name
+        // if (name) {
+        //     return response.status(400).send({
+        //         status: 400,
+        //         message: "name already exist"
+        //     })
+        // }
+        // else{
+
+        //     const create = await nameService.create(request_data);
+
+        //     return response.status(200).send({
+        //         status: 200,
+        //         data: create
+        //     })
+        // }
     }
 
     /*
