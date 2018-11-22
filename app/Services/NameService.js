@@ -13,8 +13,8 @@ class NameService {
     | Create new user in database
     |--------------------------------------------------------------------------
     */
-    async createUser(data) {
-        return await Name.all().fetch()
+    async getAllName(data) {
+        return await Name.all()
     }
 
 }

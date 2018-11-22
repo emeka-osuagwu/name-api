@@ -33,7 +33,7 @@ class NameController {
     |--------------------------------------------------------------------------
     */
     async index() {
-        return await userService.getAllUsers();
+        return await nameService.getAllName();
     }
 
 }
