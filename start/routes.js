@@ -18,4 +18,4 @@ const Route = use('Route')
 
 Route.group(() => {
     Route.get("/", "NameController.index");
-}).prefix("api/v1/user");
+}).prefix("api/v1/name");
