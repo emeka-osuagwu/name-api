@@ -16,6 +16,8 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+Route.get("/", "NameController.index");
+
 Route.group(() => {
     Route.get("/", "NameController.index");
     Route.post("create", "NameController.create");
