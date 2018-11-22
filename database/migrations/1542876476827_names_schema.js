@@ -4,17 +4,19 @@
 const Schema = use('Schema')
 
 class NamesSchema extends Schema {
-  up () {
-    this.create('names', (table) => {
-      table.increments()
-      table.timestamps()
-      table.string('name').notNullable().unique()
-    })
-  }
 
-  down () {
-    this.drop('names')
-  }
+    up () {
+        this.create('names', (table) => {
+            table.increments()
+            table.timestamps()
+            table.string('name').notNullable().unique();
+            table.enu('status', ['white_list', 'black_list']);
+        })
+    }
+
+    down () {
+        this.drop('names')
+    }
 }
 
 module.exports = NamesSchema

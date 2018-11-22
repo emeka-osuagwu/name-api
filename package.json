@@ -9,7 +9,7 @@
     "dev": "nodemon server.js",
     "test": "node ace test",
     "acm": "adonis make:model",
-    "arm": "adonis migration:run && adonis seed",
+    "arm": "adonis migration:refresh && adonis seed",
     "amc": "adonis make:controller"
   },
   "keywords": [

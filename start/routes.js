@@ -18,4 +18,6 @@ const Route = use('Route')
 
 Route.group(() => {
     Route.get("/", "NameController.index");
+    Route.post(":id/update", "NameController.update");
+    Route.post(":id/delete", "NameController.delete");
 }).prefix("api/v1/name");
