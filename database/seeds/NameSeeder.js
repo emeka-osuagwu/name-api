@@ -16,7 +16,7 @@ const Database = use('Database')
 
 class NameSeeder {
     async run () {
-        const user = await Factory.model('App/Models/Name').createMany(100)
+        const user = await Factory.model('App/Models/Name').createMany(1)
     }
 }
 

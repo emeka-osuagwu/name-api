@@ -5,6 +5,9 @@
 | Packages Namespaces
 |--------------------------------------------------------------------------
 */
+const node_xj = require("xls-to-json");
+const xlstojson = require("xls-to-json-lc");
+const exceltojson = require("xlsx-to-json-lc");
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +15,7 @@
 |--------------------------------------------------------------------------
 */
 const NameService = use("App/Services/NameService");
+const NameValidation = use("App/Validations/NameValidation");
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +23,7 @@ const NameService = use("App/Services/NameService");
 |--------------------------------------------------------------------------
 */
 const nameService = new NameService();
+const nameValidation = new NameValidation();
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +52,15 @@ class NameController {
     |--------------------------------------------------------------------------
     */
     async create({request, response}) {
+
+        let validation = await nameValidation.createNameValidation(request.all());
+
+        if(validation.fails()) {
+            return response.send({
+                status: 400,
+                data: validation.messages()
+            });
+        }
 
         const request_data = request.only([
             'name',
@@ -90,6 +104,7 @@ class NameController {
 
         if (name) {
             name.status = request.input('status')
+            console.log(name)
             name.save()
 
             return response.status(200).send({
@@ -130,6 +145,39 @@ class NameController {
             })
         }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | index - Get all user from database
+    |--------------------------------------------------------------------------
+    */
+    async upload({request, response, params: {id}}) {
+        const file = request.file('file')
+
+        // node_xj({input: file.tmpPath})
+        // .then( data => {
+        //     console.log(data)
+        // })
+        // .catch( error => {
+        //     console.log(error)
+        // })
+        //
+        xlstojson({input: file.tmpPath, output: null, lowerCaseHeaders:true}, function(err, result) {
+            if(err) {
+                return response.send({
+                    err
+                })
+            }
+            else
+            {
+                return response.send({
+                    result
+                })
+            }
+        })
+    }
+
+
 }
 
 module.exports = NameController

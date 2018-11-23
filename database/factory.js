@@ -23,6 +23,6 @@ Factory.blueprint('App/Models/User', (faker) => {
 Factory.blueprint('App/Models/Name', (faker) => {
     return {
         name: faker.username(),
-        status: "white_list"
+        status: 0
     }
 })

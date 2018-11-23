@@ -10,7 +10,7 @@ class NamesSchema extends Schema {
             table.increments()
             table.timestamps()
             table.string('name').notNullable().unique();
-            table.enu('status', ['white_list', 'black_list']);
+            table.integer('status');
         })
     }
 
