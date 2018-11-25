@@ -177,7 +177,21 @@ class NameController {
     |--------------------------------------------------------------------------
     */
     async getWhiteList({request, response}) {
-        const names = await nameService.findNameBy('status', 1)
+        const names = await nameService.findWhere('status', 1)
+
+        return response.status(200).send({
+            status: 200,
+            names: names
+        })
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | index - Get all user from database
+    |--------------------------------------------------------------------------
+    */
+    async getBlackList({request, response}) {
+        const names = await nameService.findWhere('status', 0)
 
         return response.status(200).send({
             status: 200,

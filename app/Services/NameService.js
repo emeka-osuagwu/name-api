@@ -42,6 +42,15 @@ class NameService {
     | Create new user in database
     |--------------------------------------------------------------------------
     */
+    async findWhere(field, data) {
+        return await Name.query().where(field, data).fetch();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create new user in database
+    |--------------------------------------------------------------------------
+    */
     async create(data) {
         const name = new Name()
 
