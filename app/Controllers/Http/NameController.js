@@ -67,30 +67,23 @@ class NameController {
             'status',
         ])
 
-        const create = await nameService.create(request_data);
+        const name = await nameService.findNameBy('name', request.input('name'))
 
-        return response.status(200).send({
-            status: 200,
-            data: create
-        })
+        if (name) {
+            return response.status(400).send({
+                status: 400,
+                message: "name already exist"
+            })
+        }
+        else{
 
-        // const name = nameService.findNameBy('name', request.input('name'))
-        // return name
-        // if (name) {
-        //     return response.status(400).send({
-        //         status: 400,
-        //         message: "name already exist"
-        //     })
-        // }
-        // else{
+            const create = await nameService.create(request_data);
 
-        //     const create = await nameService.create(request_data);
-
-        //     return response.status(200).send({
-        //         status: 200,
-        //         data: create
-        //     })
-        // }
+            return response.status(200).send({
+                status: 200,
+                data: create
+            })
+        }
     }
 
     /*
@@ -174,6 +167,21 @@ class NameController {
                     result
                 })
             }
+        })
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | index - Get all user from database
+    |--------------------------------------------------------------------------
+    */
+    async getWhiteList({request, response}) {
+        const names = await nameService.findNameBy('status', 1)
+
+        return response.status(200).send({
+            status: 200,
+            names: names
         })
     }
 
