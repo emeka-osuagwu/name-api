@@ -21,6 +21,7 @@ Route.get("/", "NameController.index");
 Route.group(() => {
     Route.get("/", "NameController.index");
     Route.get("/white_list", "NameController.getWhiteList");
+    Route.get("/black_list", "NameController.getWhiteList");
     Route.post("create", "NameController.create");
     Route.post(":id/update", "NameController.update");
     Route.post(":id/delete", "NameController.delete");
