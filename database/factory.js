@@ -23,6 +23,6 @@ Factory.blueprint('App/Models/User', (faker) => {
 Factory.blueprint('App/Models/Name', (faker) => {
     return {
         name: faker.username(),
-        status: 0
+        status: 1
     }
 })
