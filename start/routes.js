@@ -25,5 +25,5 @@ Route.group(() => {
     Route.post("create", "NameController.create");
     Route.post(":id/update", "NameController.update");
     Route.post(":id/delete", "NameController.delete");
-    Route.post("upload", "NameController.update");
+    Route.post("upload", "NameController.upload");
 }).prefix("api/v1/name");

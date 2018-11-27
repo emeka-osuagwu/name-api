@@ -3,8 +3,12 @@
 | Packages Namespaces
 |--------------------------------------------------------------------------
 */
-const Name = use("App/Models/Name");
+const XLSX = require('xlsx');
+const xlstojson = require("xls-to-json");
+const xlsxtojson = require("xlsx-to-json");
+
 const Database = use("Database");
+const Name = use("App/Models/Name");
 
 class NameService {
 
@@ -64,6 +68,52 @@ class NameService {
 
         return await this.findNameBy('name', data.name)
     }
+
+    async bulkUploadNames(data){
+
+        const names = await Database.select('*').from('names');
+
+        let valid_names = [];
+        const new_name = {}
+        const save = []
+        const duplicate = []
+
+        names.forEach(key => {
+            valid_names.push(key.name.toLowerCase())
+        })
+
+        Object.keys(data).forEach(fieldName => {
+            if (data[fieldName].status == 0 || data[fieldName].status == 1) {
+                new_name[fieldName] = data[fieldName];
+            }
+        });
+
+        Object.keys(new_name).forEach(fieldName => {
+
+            if (!valid_names[valid_names.findIndex(i => i == new_name[fieldName].name.toLowerCase())]) {
+                save.push({
+                    name: new_name[fieldName].name,
+                    status: new_name[fieldName].status
+                });
+            }
+
+            if (valid_names[valid_names.findIndex(i => i == new_name[fieldName].name.toLowerCase())]) {
+                duplicate.push({
+                    name: new_name[fieldName].name,
+                    status: new_name[fieldName].status
+                });
+            }
+        });
+
+        await Database.from('names').insert(save)
+
+        return {
+            duplicate,
+            saved: save
+        }
+    }
+
 }
+
 
 module.exports = NameService;

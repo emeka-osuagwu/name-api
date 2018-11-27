@@ -5,9 +5,11 @@
 | Packages Namespaces
 |--------------------------------------------------------------------------
 */
-const node_xj = require("xls-to-json");
-const xlstojson = require("xls-to-json-lc");
-const exceltojson = require("xlsx-to-json-lc");
+const XLSX = require('xlsx');
+const xlstojson = require("xls-to-json");
+const xlsxtojson = require("xlsx-to-json");
+const excelToJson = require('convert-excel-to-json');
+const Helpers = use('Helpers')
 
 /*
 |--------------------------------------------------------------------------
@@ -144,32 +146,34 @@ class NameController {
     | index - Get all user from database
     |--------------------------------------------------------------------------
     */
-    async upload({request, response, params: {id}}) {
+    async upload({request, response}) {
+
         const file = request.file('file')
 
-        // node_xj({input: file.tmpPath})
-        // .then( data => {
-        //     console.log(data)
-        // })
-        // .catch( error => {
-        //     console.log(error)
-        // })
-        //
-        xlstojson({input: file.tmpPath, output: null, lowerCaseHeaders:true}, function(err, result) {
-            if(err) {
-                return response.send({
-                    err
-                })
+        const publicPath = Helpers.appRoot()
+
+        const new_file_name = `${new Date().getTime()}.${file.subtype}`;
+
+        await file.move(Helpers.tmpPath('uploads'), {
+            name: new_file_name,
+            overwrite: true
+        })
+
+        const result = excelToJson({
+            sourceFile: publicPath + "/tmp/uploads/" + new_file_name,
+            columnToKey: {
+                A: 'name',
+                B: 'status'
             }
-            else
-            {
-                return response.send({
-                    result
-                })
-            }
+        });
+
+        const saved = await nameService.bulkUploadNames(result['Sheet1']);
+
+        response.status(200).send({
+            "status": 200,
+            data: saved
         })
     }
-
 
     /*
     |--------------------------------------------------------------------------
