@@ -16,7 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get("/", "NameController.index");
+Route.get("/", "NameController.getWhiteList");
 
 Route.group(() => {
     Route.get("/", "NameController.index");
@@ -27,4 +27,5 @@ Route.group(() => {
     Route.post(":id/delete", "NameController.delete");
     Route.post("upload", "NameController.upload");
 }).prefix("api/v1/name");
+
 Route.post("upload", "NameController.upload");
