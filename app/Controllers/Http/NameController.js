@@ -151,36 +151,38 @@ class NameController {
 
         const file = request.file('file')
 
-        if (!file) {
-            return response.status(400).send({
-                status: 400,
-                message: "invalid file"
-            })
-        }
+        return file;
 
-        const publicPath = Helpers.appRoot()
+        // if (!file) {
+        //     return response.status(400).send({
+        //         status: 400,
+        //         message: "invalid file"
+        //     })
+        // }
 
-        const new_file_name = `${new Date().getTime()}.${file.subtype}`;
+        // const publicPath = Helpers.appRoot()
 
-        await file.move(Helpers.tmpPath('uploads'), {
-            name: new_file_name,
-            overwrite: true
-        })
+        // const new_file_name = `${new Date().getTime()}.${file.subtype}`;
 
-        const result = excelToJson({
-            sourceFile: publicPath + "/tmp/uploads/" + new_file_name,
-            columnToKey: {
-                A: 'name',
-                B: 'status'
-            }
-        });
+        // await file.move(Helpers.tmpPath('uploads'), {
+        //     name: new_file_name,
+        //     overwrite: true
+        // })
 
-        const saved = await nameService.bulkUploadNames(result['Sheet1']);
+        // const result = excelToJson({
+        //     sourceFile: publicPath + "/tmp/uploads/" + new_file_name,
+        //     columnToKey: {
+        //         A: 'name',
+        //         B: 'status'
+        //     }
+        // });
 
-        response.status(200).send({
-            "status": 200,
-            data: saved
-        })
+        // const saved = await nameService.bulkUploadNames(result['Sheet1']);
+
+        // response.status(200).send({
+        //     "status": 200,
+        //     data: saved
+        // })
     }
 
     /*
