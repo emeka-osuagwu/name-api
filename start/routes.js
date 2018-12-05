@@ -17,6 +17,7 @@
 const Route = use('Route')
 
 Route.get("/", "NameController.getWhiteList");
+Route.get("upload", "NameController.index");
 
 Route.group(() => {
     Route.get("/", "NameController.index");
@@ -25,5 +26,5 @@ Route.group(() => {
     Route.post("create", "NameController.create");
     Route.post(":id/update", "NameController.update");
     Route.post(":id/delete", "NameController.delete");
-    Route.post("/upload", "NameController.upload");
+    Route.get("/upload", "NameController.upload");
 }).prefix("api/v1/name");
