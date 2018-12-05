@@ -17,7 +17,7 @@
 const Route = use('Route')
 
 Route.get("/", "NameController.getWhiteList");
-Route.get("upload", "NameController.index");
+Route.get("emeka", "NameController.index");
 
 Route.group(() => {
     Route.get("/", "NameController.index");
