@@ -6,7 +6,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "dev": "nodemon server.js",
+    "acm": "adonis make:model",
+    "arm": "adonis migration:refresh && adonis seed",
+    "amc": "adonis make:controller"
   },
   "keywords": [
     "adonisjs",
@@ -23,7 +27,11 @@
     "@adonisjs/fold": "^4.0.9",
     "@adonisjs/framework": "^5.0.9",
     "@adonisjs/ignitor": "^2.0.8",
-    "@adonisjs/lucid": "^6.1.3"
+    "@adonisjs/lucid": "^6.1.3",
+    "@adonisjs/validator": "^5.0.6",
+    "convert-excel-to-json": "^1.6.0",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.7"
   },
   "devDependencies": {},
   "autoload": {

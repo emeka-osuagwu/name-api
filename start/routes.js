@@ -16,6 +16,14 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+Route.get("/", "NameController.getWhiteList");
+
+Route.group(() => {
+    Route.get("/", "NameController.index");
+    Route.get("/white_list", "NameController.getWhiteList");
+    Route.get("/black_list", "NameController.getBlackList");
+    Route.post("create", "NameController.create");
+    Route.post(":id/update", "NameController.update");
+    Route.post(":id/delete", "NameController.delete");
+    Route.post("/upload", "NameController.upload");
+}).prefix("api/v1/name");
